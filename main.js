@@ -20,19 +20,20 @@ var numJewelsInStones = function(jewels, stones) {
 ახნსა: ძვირფასი ქვა ამ შემთხვევაში არის მხოლოდ ‘x’ თქვენ კი გაქვთ მხოლოდ
 ორიცალი ‘X’.*/
 
-var jewels='aA';
-var stones='aAABBBB';
-
-var numJewelsInStones= function(jewels,stones){
-    var count = 0;
-    for(let i in jewels) {
-        stones.includes(jewels[i]) ? count++ : false;
+var numJewelsInStones = function (jewels, stones) {
+  var count = 0;
+  for (var i = 0; i<jewels.length; i++) {
+    for (var x= 0; x<stones.length; x++) {
+      if (jewels[i].includes(stones[x])) {
+        count++;
+      }
     }
-    return count;
+  }
+  return count;
+};
 
-}
-
-console.log(numJewelsInStones(jewels,stones));
+console.log("the number of jewels in stones is: " + numJewelsInStones("aA", "aAAbbbb"));
+console.log("the number of jewels in stones is: " + numJewelsInStones("x", "X"));
 
 /*თქვენს დაწერილ ფუნქციას პარამეტრად გადმოეცემა s სტრინგი, რომელიც შედგება
 შემდეგი სიმბოლოებისგან: '(', ')', '{', '}', '[' და']'
@@ -57,55 +58,40 @@ Output: true
 Input: s = "(]"
 Output: false */
 
+var isValid = function (s) {
+  let stack = [];
+  for (let i = 0; i < s.length; i++) {
+    let x = s[i];
 
-
-
-function isValid(s)
-{
-    let stack = [];
-    for(let i = 0; i < s.length; i++)
-    {
-        let x = s[i];
-  
-        if (x == '(' || x == '[' || x == '{')
-        {
-        stack.push(x);
-        continue;
-        }
-        if (stack.length == 0)
-            return false;
-              
-        let check;
-        switch (x){
-        case ')':
-            check = stack.pop();
-            if (check == '{' || check == '[')
-                return false;
-            break;
-  
-        case '}':
-            check = stack.pop();
-            if (check == '(' || check == '[')
-                return false;
-            break;
-  
-        case ']':
-            check = stack.pop();
-            if (check == '(' || check == '{')
-                return false;
-            break;
-        }
+    if (x == "(" || x == "[" || x == "{") {
+      stack.push(x);
+      continue;
     }
-  
-    return (stack.length == 0);
-}
-  
-let s = "([{}])";
-  
-if (isValid(s))
-    document.write("input:" + s + " output: true"
-    
-    );
-else
-    document.write("input:" + s + " output: false");
+    if (stack.length == 0) return false;
 
+    let check;
+    switch (x) {
+      case ")":
+        check = stack.pop();
+        if (check == "{" || check == "[") return false;
+        break;
+
+      case "}":
+        check = stack.pop();
+        if (check == "(" || check == "[") return false;
+        break;
+
+      case "]":
+        check = stack.pop();
+        if (check == "(" || check == "{") return false;
+        break;
+    }
+  }
+
+  return stack.length == 0;
+};
+
+let s = "([{}]";
+
+if (isValid) document.write("input:" + s + " output: true");
+else document.write("input:" + s + " output: false");
